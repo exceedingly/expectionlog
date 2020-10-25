@@ -1,5 +1,7 @@
 package util;
 
+import dto.ExpectionLogToDB;
+
 import java.sql.*;
 
 public class getSqlSession {
@@ -28,6 +30,42 @@ public class getSqlSession {
            // rs = ps.executeQuery();
 //           ps.executeQuery();
            ps.executeUpdate();
+            //遍历执行结果
+//            while(rs.next()){
+//                System.out.println(rs.getString("username"));
+//            }
+
+
+
+
+
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            System.out.println("工具类获得sqlsessionfactory失效");
+        }
+
+    }
+    public static void commitToDB(ExpectionLogToDB expectionLogToDB){
+
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ddblog?serverTimezone=UTC", "root", "123456");
+            String sql = "insert into usertest(id,expection_name,expection_parm,expection_adress,expection_level,expection_runtime) value(?,?,?,?,?,?)";
+
+            ps = conn.prepareStatement(sql);
+
+                ps.setString(1,expectionLogToDB);
+
+
+
+
+            //执行sql
+            // rs = ps.executeQuery();
+//           ps.executeQuery();
+            ps.executeUpdate();
             //遍历执行结果
 //            while(rs.next()){
 //                System.out.println(rs.getString("username"));
